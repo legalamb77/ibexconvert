@@ -1,6 +1,8 @@
 #PLAN: take two input files, and an output name(3 args). The first input is the original experiment file, the second is
 #the experiment results.
 #First, match until end of line on the first file, and place it in the new file. Then put a tab, and grab the trial data
+
+#each time a patient is reached, add new break column, and then possibly put labels again?
 import sys
 import re
 import json
@@ -24,7 +26,7 @@ nonHeadersString=''.join(experimentData[1:len(experimentData)])
 trialDataListWithNonHeaders=[]
 for i in xrange(len(trialDataList)):
     if len(trialDataList[i])>0 and not trialDataList[i][0]=="#":
-        trialDataList[i]=trialDataList[i].replace(",", "\t")+nonHeadersString
+        trialDataList[i]=nonHeadersString + "\t" + trialDataList[i].replace(",", "\t")
 
 out=open(outputFileName, 'w')
 out.write(experimentData[0]+"\n")
